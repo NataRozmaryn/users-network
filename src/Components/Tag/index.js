@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const TagList = ({title}) => {
+const Tag = ({title}) => {
 
 return (
   <div className="tag">
@@ -10,4 +10,4 @@ return (
   )   
 };
 
-export default TagList;
+export default Tag;

@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { getPostListByTag } from '../../db';
-import ShortUserInfo from '../ShortUserInfo';
-import Tag from '../Tag';
-import DateFormat from '../../DateFormat';
+import Posts from '../Post/Post';
 
 
 const PostsByTag = ({match}) => {
   const [postList, setPostList] = useState([]);
-  const {tag} = match.params;
+  const {tagTitle} = match.params;
   useEffect(() => {
-      debugger;
+      // debugger;
     if (!postList.length) {
-      getPostListByTag(tag).then(res => {
+      getPostListByTag(tagTitle).then(res => {
         console.log('all posts by tag', res.data);
 
         setPostList(res.data);
       });
     }
-  },[tag]);
+  }, [tagTitle]);
   
   return (
 
@@ -27,46 +24,7 @@ const PostsByTag = ({match}) => {
         <div className="posts-list">
           {postList &&
             postList.map((item) => {
-              let tags = item.tags;
-              return <div className="post" key={item.id}>
-                <ShortUserInfo
-                  title={item.owner.title}
-                  firstName={item.owner.firstName}
-                  lastName={item.owner.lastName}
-                  email={item.owner.email}
-                  picture={item.owner.picture} />
-
-                <div className="post-info">
-                  <img className="post-img" src={item.image} alt="" />
-                  <div className="tags-wrapper">
-                    {tags.map((tag) => { return <Tag title={tag} key={tag}/> })}
-                  </div>
-                  <p className="post-title">{item.text}</p>
-                  <a href={item.link}>{item.link}</a>
-
-                  <span className="post-title">&#10084; {item.likes} Likes</span>
-                  <span className="post-title">{DateFormat(item.publishDate)}</span>
-                  <div>
-                    <Link
-                      to={{
-                        pathname: `posts/${item.id}`,
-
-                      }}
-                      key={item.id}
-                    > Get Post Comments</Link>
-                  </div>
-                  <div>
-                    <Link
-                      to={{
-                        pathname: `users/${item.owner.id}`,
-
-                      }}
-                      key={item.id}
-                      >Get Owner Profile</Link>
-                  </div>
-
-                  </div>
-                  </div>
+              return <Posts post={item} />
           })
           }
       </div>

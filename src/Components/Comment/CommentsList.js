@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {getPostCommentsList} from '../../db';
 import ShortUserInfo from '../ShortUserInfo';
-import Comment from '../Comment';
+import CommentMessage from './CommentMessage';
+import CommentOwner from './CommentOwner';
 import Loader from '../Loader';
+import Separator from '../Separator/Separator';
 
-const CommentsList = ({match, location, history}) => {
+const CommentsList = ({match}) => {
     const { postId } = match.params;
     const [commentsList, setCommentsList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,7 +15,6 @@ const CommentsList = ({match, location, history}) => {
     if (!commentsList.length) {
       getPostCommentsList(postId).then(res => {
         console.log('all comments', res.data);
-
         setCommentsList(res.data);
       }).finally(() => setLoading(false));
     }
@@ -21,19 +22,15 @@ const CommentsList = ({match, location, history}) => {
 return (
   <div className="comments-wrapper">
     <h3>Comment Page</h3>
-
-    {loading} ? <Loader /> :
-        {commentsList && commentsList.map((comment) => <div className="comment" key={comment.id}>
-          <ShortUserInfo 
-            title={comment.owner.title} 
-            firstName={comment.owner.firstName} 
-            lastName={comment.owner.lastName}
-            picture={comment.owner.picture}
-            />
-          <Comment 
-            comment={comment.message} 
-            publishDate={comment.publishDate} />
-          </div>)}
+    {loading ? <Loader /> :
+      commentsList && commentsList.map((comment) => <div className="comment" key={comment.id}>
+        <CommentOwner owner={comment.owner}/>
+        <Separator />
+        <CommentMessage 
+          comment={comment.message} 
+          publishDate={comment.publishDate} />
+        </div>)
+    }
   </div>
   )
 };

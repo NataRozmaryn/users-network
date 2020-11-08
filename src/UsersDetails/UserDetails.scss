@@ -1,0 +1,21 @@
+.userDetails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+
+    &__picture {
+        align-self: center;
+        width: 200px;
+    }
+
+    .userDetails__info{
+        &--bold{
+            font-weight: bold;
+        }
+        &--gray{
+            color: gray;
+        }
+    }
+
+}

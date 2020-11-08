@@ -4,13 +4,13 @@ const Home = lazy(() =>
   import('./Components/Home')
 );
 const Users = lazy(() =>
-  import('./Components/Users')
+  import('./Components/UsersList/UsersList')
 );
 const UserDetails = lazy(() =>
-  import('./Components/UserDetails')
+  import('./UsersDetails/UserDetails')
 );
 const PostsList = lazy(() =>
-  import('./Components/PostsList')
+  import('./Components/PostsList/PostsList')
 );
 const PostsByTag = lazy(() =>
   import('./Components/PostsByTag')
@@ -19,7 +19,10 @@ const TagsList = lazy(() =>
   import('./Components/TagsList')
 );
 const CommentsList = lazy(() =>
-  import('./Components/CommentsList')
+  import('./Components/Comment/CommentsList')
+);
+const UserPosts = lazy(() =>
+  import ('./Components/UserPosts/UserPosts.js')
 );
 
 const route = [
@@ -40,9 +43,16 @@ const route = [
   {
     path: '/users/:userId',
     label: 'User Details',
-    isExact: false,
+    isExact: true,
     isInMenu: false,
     component: UserDetails,
+  },
+  {
+    path: '/users/:userId/posts',
+    label: 'User Posts',
+    isExact: false,
+    isInMenu: false,
+    component: UserPosts,
   },
   {
     path: '/posts',

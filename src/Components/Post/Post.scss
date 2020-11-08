@@ -1,0 +1,41 @@
+.post {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid gray;
+    width: 300px;
+
+    &__userInfo {
+        display: flex;
+        flex-direction: row;
+
+        &__img {
+            align-self: center;
+            border-radius: 50%;
+            width: 55px;
+            padding: 10px;
+        }
+        &__name{
+            font-weight: bold;
+        }
+
+        &__email {
+            color: gray;
+        }
+    }
+
+    &__content {
+        &__picture {
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        &__date {
+            color: gray;
+            font-size: 12px;
+        }
+    }
+    &__tags{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

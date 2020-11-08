@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Tag from '../Tag';
 import { getTagsList } from '../../db';
+import Separator from '../Separator/Separator';
 
 const TagsList = () => {
   const [tagList, setTagList] = useState([]);
@@ -20,11 +21,13 @@ const TagsList = () => {
       <div className="tags-list">
         {tagList &&
           tagList.map((item) => {
-            return <div className="tag-wrapper">
+            return <div className="tag-wrapper" key={item}>
               <Tag key={item} title={item} />
+              <Separator />
               <Link to={{
                         pathname: `tags/${item}`
-                      }}  key={item}>Get Post by Tag</Link>
+                      }}
+              >Get Post by Tag</Link>
             </div>
           })
         }
