@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Loader from '../Components/Loader';
+import Loader from '../Loader';
 
-import { getUserById } from '../db';
-import DateFormat from '../DateFormat';
+import { getUserById } from '../../db';
+import DateFormat from '../../DateFormat';
 import './UserDetails.scss';
 
 const UserDetails = ({ match}) => {
@@ -43,11 +43,11 @@ const UserDetails = ({ match}) => {
           </p>
         </div>
         <div className="userDetails__address">
-          {/* <p><span className="userDetails__info--bold">Address</span></p>
+          <p><span className="userDetails__info--bold">Address</span></p>
           <p><span className="userDetails__info--bold">Country: </span>{user.location.country}</p> 
           <p><span className="userDetails__info--bold">State: </span>{user.location.state}</p>
           <p><span className="userDetails__info--bold">City: </span>{user.location.city}</p>
-          <p><span className="userDetails__info--bold">Street: </span>{user.location.street}</p> */}
+          <p><span className="userDetails__info--bold">Street: </span>{user.location.street}</p>
         </div>
       </div>
       <div className="separator"></div>

@@ -1,29 +1,12 @@
-import { lazy } from 'react';
-
-const Home = lazy(() =>
-  import('./Components/Home')
-);
-const Users = lazy(() =>
-  import('./Components/UsersList/UsersList')
-);
-const UserDetails = lazy(() =>
-  import('./UsersDetails/UserDetails')
-);
-const PostsList = lazy(() =>
-  import('./Components/PostsList/PostsList')
-);
-const PostsByTag = lazy(() =>
-  import('./Components/PostsByTag')
-);
-const TagsList = lazy(() =>
-  import('./Components/TagsList')
-);
-const CommentsList = lazy(() =>
-  import('./Components/Comment/CommentsList')
-);
-const UserPosts = lazy(() =>
-  import ('./Components/UserPosts/UserPosts.js')
-);
+// import { lazy } from 'react';
+import Home from './Components/Home';
+import Users from './Components/UsersList/UsersList';
+import UserDetails from './Components/UsersDetails/UserDetails';
+import PostsList from './Components/PostsList/PostsList';
+import PostsByTag from './Components/PostsByTag';
+import TagsList from './Components/TagsList';
+import CommentsList from './Components/Comment/CommentsList';
+import UserPosts from './Components/UserPosts/UserPosts.js';
 
 const route = [
   {

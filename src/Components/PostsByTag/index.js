@@ -7,7 +7,6 @@ const PostsByTag = ({match}) => {
   const [postList, setPostList] = useState([]);
   const {tagTitle} = match.params;
   useEffect(() => {
-      // debugger;
     if (!postList.length) {
       getPostListByTag(tagTitle).then(res => {
         console.log('all posts by tag', res.data);
