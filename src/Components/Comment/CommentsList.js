@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {getPostCommentsList} from '../../db';
-import ShortUserInfo from '../ShortUserInfo';
 import CommentMessage from './CommentMessage';
 import CommentOwner from './CommentOwner';
 import Loader from '../Loader';
 import Separator from '../Separator/Separator';
 
-const CommentsList = ({match}) => {
-    const { postId } = match.params;
+const CommentsList = ({match, postid}) => {
+    const postId = postid || match && match.params;
     const [commentsList, setCommentsList] = useState([]);
     const [loading, setLoading] = useState(true);
   useEffect(() => {

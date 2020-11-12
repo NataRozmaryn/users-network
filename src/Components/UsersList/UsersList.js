@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import UserInfo from './UserInfo';
 
 import { getAllUsers } from '../../db';
 import './UsersList.scss';
@@ -16,32 +17,22 @@ class Users extends Component {
     });
   }
 
-  render() {console.log(this.props);
-    const { userList } = this.state;
+  render() {
+  const { userList } = this.state;
 
     return (
       <div className="usersList">
         {userList
-          .map(({ id, title, lastName, firstName, picture, email }) => ( 
-              <div className="usersList__user" key={id}>
-              <img src={picture} alt="" className="usersList__user__picture" />
-              <div className="usersList__user__info">
-                <p className="usersList__user__id">{id}</p>
-                <p className="usersList__user__name">{title}. {lastName} {firstName}</p>
-                <p className="usersList__user__email">{email}</p>
-              </div>
-              <div className="separator"></div>
-                <Link
-                  to={{
-                    pathname: `users/${id}`
-                  }}
-                ><p>Get Full Profile</p></Link>
-                <Link
-                  to={{
-                    pathname: `users/${id}/posts`,
-                  }}
-                ><p>Get Posts List</p></Link>
-              </div>   
+          .map(({ id, title, lastName, firstName, picture, email }) => (
+            <div className="usersList__user" key={id}>
+            <Link to={`/users/${id}`}
+            >
+              <UserInfo picture={picture} title={title} lastName={lastName} firstName={firstName} email={email} /> 
+            </Link> 
+            <div className="separator"></div> 
+            <Link to={`/users/${id}/posts`}
+            ><p>Get Posts List</p></Link>
+            </div> 
           ))}
       </div>
     );

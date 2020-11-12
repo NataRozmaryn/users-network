@@ -33,7 +33,7 @@ const route = [
   {
     path: '/users/:userId/posts',
     label: 'User Posts',
-    isExact: false,
+    isExact: true,
     isInMenu: false,
     component: UserPosts,
   },
@@ -47,7 +47,7 @@ const route = [
   {
     path: '/posts/:postId',
     label: 'Post Comments',
-    isExact: false,
+    isExact: true,
     isInMenu: false,
     component: CommentsList,
   },
@@ -61,7 +61,7 @@ const route = [
   {
     path: '/tags/:tagTitle',
     label: 'Posts by Tag',
-    isExact: false,
+    isExact: true,
     isInMenu: false,
     component: PostsByTag,
   },

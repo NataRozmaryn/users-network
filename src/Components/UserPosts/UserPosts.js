@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getUsersPostList } from '../../db';
 import Post from '../Post/Post';
 
-const UserPostsList = ({match}) => {
+const UserPostsList = ({match, userid}) => {//debugger;
   const [postList, setPostList] = useState([]);
-  const { userId } = match.params; 
+  const userId = userid || (match && match.params.userId);
   useEffect(() => {
     if (!postList.length) {
       getUsersPostList(userId).then(res => {

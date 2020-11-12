@@ -5,6 +5,7 @@ import Loader from '../Loader';
 import { getUserById } from '../../db';
 import DateFormat from '../../DateFormat';
 import './UserDetails.scss';
+import UserPostsList from '../UserPosts/UserPosts';
 
 const UserDetails = ({ match}) => {
   const [user, setUser] = useState([]);
@@ -22,7 +23,7 @@ const UserDetails = ({ match}) => {
   user ? (
     <div>
       <div className="userDetails"  key={user.id}>
-        <img src={user.picture} alt="" className="userDetails__picture" />
+        <img src={user.picture} alt="" className="userDetails__picture" loading="lazy" />
         <div className="userDetails__info">
           <p className="userDetails__info--gray">{user.id}</p>
           <h3 className="userDetails__info--bold">{user.title}. {user.firstName} {user.lastName}</h3>
@@ -51,13 +52,13 @@ const UserDetails = ({ match}) => {
         </div>
       </div>
       <div className="separator"></div>
-
-      <Link
+      <UserPostsList userid={user.id} />
+      {/* <Link
         to={{
           pathname: `users/${user.id}/posts`,
         }}
        
-      >Get Posts List</Link>
+      >Get Posts List</Link> */}
     </div>
   ) : <p>No user defined</p>;
 };

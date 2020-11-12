@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import { Link } from 'react-router-dom';
 import Tag from '../Tag';
 import { getTagsList } from '../../db';
 import Separator from '../Separator/Separator';
+import PostsByTag from '../PostsByTag';
 
 const TagsList = () => {
   const [tagList, setTagList] = useState([]);
@@ -24,9 +25,7 @@ const TagsList = () => {
             return <div className="tag-wrapper" key={item}>
               <Tag key={item} title={item} />
               <Separator />
-              <Link to={{
-                        pathname: `tags/${item}`
-                      }}
+              <Link to={`tags/${item}`} params={{ tagTitle: `${item}`}}
               >Get Post by Tag</Link>
             </div>
           })

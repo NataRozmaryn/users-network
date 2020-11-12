@@ -3,7 +3,7 @@ import { getPostListByTag } from '../../db';
 import Posts from '../Post/Post';
 
 
-const PostsByTag = ({match}) => {
+const PostsByTag = ({match}) => {//debugger;
   const [postList, setPostList] = useState([]);
   const {tagTitle} = match.params;
   useEffect(() => {
@@ -17,7 +17,6 @@ const PostsByTag = ({match}) => {
   }, [tagTitle]);
   
   return (
-
     <div className="posts-wrapper">
       <div>
         <div className="posts-list">
