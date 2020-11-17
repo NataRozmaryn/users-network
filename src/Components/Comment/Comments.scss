@@ -1,30 +1,7 @@
 .comment {
     border: 1px solid gray;
     margin: 10px;
-    width: 300px;
-
-    // &__picture {
-    //     width: 35px;
-    //     height: 35px;
-    //     margin: 5px;
-    //     align-self: center;
-    // }
-    // &--round-image {
-    //     border-radius: 50%;
-    // }
-    // &--square-image {
-    //     border-radius: unset;
-    // }
-    // &__message {
-    //     display: flex;
-    //     justify-content: space-between;;
-    // }
-    // &__shortUserInfo {
-    //     display: flex;
-    //     flex-direction: row;
-    //     border-bottom: 1px solid gray;
-    //     margin: 5px;
-    // }
+    width: 280px;
   }
   .commentOwner {
       display: flex;
@@ -42,6 +19,7 @@
       }
       &__email {
         color: gray;
+        font-size: 12px;
       }
 
   }

@@ -1,0 +1,40 @@
+.loginForm {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    margin: auto;
+    width: 400px;
+    padding: 10px;
+    background-color: lavender;
+
+    &_input {
+        &__valid {
+            border: 2px solid rgb(118, 230, 118);
+        }
+
+        &__invalid {
+            border: 2px solid red;
+        
+            &_label{
+                color: red;
+                border: 1px solid red;
+                padding: 5px;
+                background-color: pink;
+            }
+        }
+        &__input_container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 70px;
+        } 
+    }
+
+}
+input[type=text] {
+    border-radius: 5px;
+}
+button {
+    margin: 15px 0;
+    height: 45px;
+}
