@@ -7,6 +7,7 @@ import PostsByTag from './Components/PostsByTag';
 import TagsList from './Components/TagsList';
 import CommentsList from './Components/Comment/CommentsList';
 import UserPosts from './Components/UserPosts/UserPosts.js';
+import LoginForm from './Components/LoginForm/LoginForm';
 
 const route = [
   {
@@ -14,6 +15,7 @@ const route = [
     label: 'Home',
     isExact: true,
     isInMenu: true,
+    needsAuth: false,
     component: Home,
   },
   {
@@ -21,6 +23,7 @@ const route = [
     label: 'Users List',
     isExact: true,
     isInMenu: true,
+    needsAuth: true,
     component: Users,
   },
   {
@@ -28,6 +31,7 @@ const route = [
     label: 'User Details',
     isExact: true,
     isInMenu: false,
+    needsAuth: true,
     component: UserDetails,
   },
   {
@@ -35,6 +39,7 @@ const route = [
     label: 'User Posts',
     isExact: true,
     isInMenu: false,
+    needsAuth: true,
     component: UserPosts,
   },
   {
@@ -42,6 +47,7 @@ const route = [
     label: 'Posts List',
     isExact: true,
     isInMenu: true,
+    needsAuth: true,
     component: PostsList,
   },
   {
@@ -49,6 +55,7 @@ const route = [
     label: 'Post Comments',
     isExact: true,
     isInMenu: false,
+    needsAuth: true,
     component: CommentsList,
   },
   {
@@ -56,6 +63,7 @@ const route = [
     label: 'Tag List',
     isExact: true,
     isInMenu: true,
+    needsAuth: true,
     component: TagsList,
   },
   {
@@ -63,7 +71,16 @@ const route = [
     label: 'Posts by Tag',
     isExact: true,
     isInMenu: false,
+    needsAuth: true,
     component: PostsByTag,
+  },
+  {
+    path: '/login',
+    label: 'Login',
+    isExact: true,
+    isInMenu: false,
+    needsAuth: true,
+    component: LoginForm,
   },
 ];
 

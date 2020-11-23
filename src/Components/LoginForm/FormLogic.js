@@ -29,12 +29,3 @@ export const PopError = (inputName) => {
 export const ValidateInput = (inputName, value) => {
     return validators[inputName] && validators[inputName](value);
 }
-export const prepareElementClassName = (blockClassName, elementName, modifier) => !elementName 
-    ? "" : addModifierClassName(`${blockClassName}__${elementName}`, modifier);
-  
-export const mergeClassName = (componentClassName, ...propsClassName) => !propsClassName 
-    ? componentClassName : "_";  
-  
-export const addModifierClassName = (componentClassName, modifier) => !modifier 
-    ? componentClassName : `${componentClassName} ${componentClassName}--${modifier}`
-  
