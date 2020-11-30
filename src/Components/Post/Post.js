@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PostOwner from './PostOwner';
 
 import "./Post.scss";
@@ -23,11 +22,6 @@ const Post = ({post}) => {
             <Separator />
             <button onClick={OpenCommentList}>Comment List</button>
             { showComment ? <CommentsList postid={post.id}/>: null }
-            {/* <Link
-                to={{
-                    pathname: `posts/${post.id}`,
-                }}
-            > Get Post Comments</Link>  */}
         </div>
         )
 };

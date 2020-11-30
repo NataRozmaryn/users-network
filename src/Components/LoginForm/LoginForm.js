@@ -1,29 +1,15 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
 import Input from './Input';
 import './LoginForm.scss';
 
 import { ValidateInput, PushError, PopError, HasErrors } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
+import UserLoginService from '../../services/userLoginService';
 
 class LoginForm extends PureComponent {
   state = {
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    agree: false,
-    formValid: false
-  }
-
-  componentDidMount() {
-    const ls = localStorage.getItem('loginForm');
-    const user = ls ? JSON.parse(ls) : '';
-    console.log("ls", user);
-
-    if (user) {
-      this.setState(user);
-    };
   }
 
   validateField = (fieldName, value) => {
@@ -44,35 +30,25 @@ class LoginForm extends PureComponent {
     this.setState({ [fieldName]: value });
   }
 
-  handleSubmit = (e) => {debugger;
-    console.log(this.state)
-    localStorage.setItem('loginForm', JSON.stringify(this.state));
-    this.context.setAuthirized(true);
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.props.history.push('/');
+    UserLoginService.authorizeUser(this.state.email,this.state.password)
+      .then((user) => {
+        if (user) {
+          this.context.setAuthorized(true);
+          this.props.history.push('/');
+        } else {
+          // show error message
+          console.log("auth failed");
+        }
+      })
   }
 
   render() {
     return (
-      <form className="loginForm" onSubmit={this.handleSubmit} >
-        <Input
-          fieldName="firstName"
-          label="First Name"
-          value={this.state.firstName}
-          onChange={this.updateField}
-          type="text"
-          onValidate={this.validateField}
-          className="loginFormInput"
-        />
-        <Input
-          fieldName="lastName"
-          label="Last Name"
-          value={this.state.lastName}
-          onChange={this.updateField}
-          type="text"
-          onValidate={this.validateField}
-          className="loginFormInput"
-        />
+      <form method="post"
+        className="loginForm"
+        onSubmit={this.handleSubmit} >
         <Input
           fieldName="email"
           label="Email"
@@ -91,20 +67,11 @@ class LoginForm extends PureComponent {
           onValidate={this.validateField}
           className="loginFormInput"
         />
-        <Input
-          fieldName="agree"
-          label="Email preferences"
-          value={this.state.agree}
-          onChange={this.updateField}
-          type="checkbox"
-          onValidate={this.validateField}
-          className="loginFormInput"
-        />
         <button
           className="button"
-          type="submit" disabled={!this.state.formValid}
+          type="submit"
         >
-          Create account
+          Login
       </button>
       </form>
     );

@@ -2,10 +2,11 @@ import axios from 'axios';
 
 const BASE_URL = 'https://dummyapi.io/data/api';
 const APP_ID = '5f9f2dd3e85f8408915aeed6';
+const LIMIT = 5;
 
 
-export const getAllUsers = (LIMIT) => {
-    return axios.get(`${BASE_URL}/user?limit=${LIMIT}`, { headers: { 'app-id': APP_ID } }).then((res) => {
+export const getAllUsers = (PAGE) => {
+    return axios.get(`${BASE_URL}/user?page=${PAGE}&limit=${LIMIT}`, { headers: { 'app-id': APP_ID } }).then((res) => {
         return res.data
     });
 };
@@ -47,4 +48,41 @@ export const getTagsList = (LIMIT) => {
         return res.data
     });
 };
+
+export const getDataFromJsonServer = () => {
+    let data;
+    return axios.get('http://localhost:3000/db')
+    .then(resp => {
+        data = resp.data;
+        data.forEach(e => {
+            console.log(`${e.first_name}, ${e.last_name}, ${e.email}`);
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+export const changeDataInJsonServer = () => {
+    axios.put('http://localhost:3000/users/6/', {
+    first_name: 'Fred',
+    last_name: 'Blair',
+    email: 'freddyb34@yahoo.com'
+    }).then(resp => {
+
+        console.log(resp.data);
+    }).catch(error => {
+
+        console.log(error);
+    });  
+}
+
+export const deleteDataFromJsonServer = () => {
+    axios.delete('http://localhost:3000/users/1/')
+    .then(resp => {
+        console.log(resp.data)
+    }).catch(error => {
+        console.log(error);
+    });  
+}
        

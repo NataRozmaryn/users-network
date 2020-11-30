@@ -8,6 +8,7 @@ import TagsList from './Components/TagsList';
 import CommentsList from './Components/Comment/CommentsList';
 import UserPosts from './Components/UserPosts/UserPosts.js';
 import LoginForm from './Components/LoginForm/LoginForm';
+import SignUpForm from './Components/LoginForm/SignUp';
 
 const route = [
   {
@@ -15,7 +16,7 @@ const route = [
     label: 'Home',
     isExact: true,
     isInMenu: true,
-    needsAuth: false,
+    needsAuth: true,
     component: Home,
   },
   {
@@ -75,11 +76,19 @@ const route = [
     component: PostsByTag,
   },
   {
+    path: '/signup',
+    label: 'Sign up',
+    isExact: true,
+    isInMenu: true,
+    needsAuth: false,
+    component: SignUpForm,
+  },
+  {
     path: '/login',
     label: 'Login',
     isExact: true,
     isInMenu: false,
-    needsAuth: true,
+    needsAuth: false,
     component: LoginForm,
   },
 ];

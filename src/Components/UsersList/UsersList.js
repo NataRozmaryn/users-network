@@ -7,20 +7,22 @@ import './UsersList.scss';
 
 class Users extends Component {
   state = {
-    userList: []
+    userList: [],
+    page: 1
   };
   componentDidMount() {
-    getAllUsers().then(res => {console.log('users list', res.data);
+    getAllUsers(this.state.page).then(res => {console.log('users list', res.data);
       return this.setState({
         userList: res.data
       });
     });
   }
+  handleClickMoreBtn = () => this.setState({page: this.state.page + 1});
 
   render() {
   const { userList } = this.state;
 
-    return (
+    return (<>
       <div className="usersList">
         {userList
           .map(({ id, title, lastName, firstName, picture, email }) => (
@@ -35,6 +37,7 @@ class Users extends Component {
             </div> 
           ))}
       </div>
+      <button className="button" onClick={this.handleClickMoreBtn}>Show more</button></>
     );
   }
 }

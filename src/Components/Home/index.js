@@ -1,11 +1,14 @@
 import React from 'react';
-
+import UserLoginService from '../../services/userLoginService';
+import RegistrationForm from '../LoginForm/RegistrationForm';
 
 const Home = () => {
+  
   return (
     <div className="home">
       <h3>Home Page</h3>
-      <p> Welcome {localStorage.getItem('loginForm') ? JSON.parse(localStorage.getItem('loginForm')).firstName : "" }! </p>
+      <p> Welcome! </p>
+      <RegistrationForm/>
     </div>
   )
 };

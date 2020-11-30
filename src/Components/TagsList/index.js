@@ -1,9 +1,8 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Tag from '../Tag';
 import { getTagsList } from '../../db';
 import Separator from '../Separator/Separator';
-import PostsByTag from '../PostsByTag';
 
 const TagsList = () => {
   const [tagList, setTagList] = useState([]);

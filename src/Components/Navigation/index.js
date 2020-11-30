@@ -3,22 +3,24 @@ import { NavLink, Link } from 'react-router-dom';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 
 import routes from '../../routes';
+import UserLoginService from '../../services/userLoginService';
 
-const Navigation = () => {
-  const [auth, setAuth] = useContext(IsAuthorizedContext);
-  console.log("1", IsAuthorizedContext);
+const Navigation = () => {  
+  const {authorized, setAuthorized} = useContext(IsAuthorizedContext);
 
   const Logout = () => {
-    setAuth(false);
-    localStorage.removeItem('loginForm');
+    UserLoginService.logout().then(() => { setAuthorized(false); });
   }
 
+  // debugger;
+  console.log("1",authorized);
   return (
     <div className="navigation">
       <div>
-        {routes.map(
-          ({ path, isExact, label, isInMenu }) =>
-            isInMenu && (
+        {routes.filter(({isInMenu}) => isInMenu).map(
+          ({ path, isExact, label, needsAuth }) => 
+          !authorized && !needsAuth ? (
+
               <NavLink
                 className="link"
                 activeClassName="active-link"
@@ -28,11 +30,20 @@ const Navigation = () => {
               >
                 {label}
               </NavLink>
-            ),
-        )}</div>
-      {auth ?
+            ) : <NavLink
+            className="link"
+            activeClassName="active-link"
+            to={path}
+            exact={isExact}
+            key={path}
+          >
+            {label}
+          </NavLink>,
+        )}
+      </div>
+      {authorized ?
         <Link to='' onClick={Logout} className="link" >Logout</Link> :
-        <Link to={!auth ? `/login` : ""} className="link">Login</Link>
+        <Link to={!authorized ? `/login` : ""} className="link">Login</Link>
       }
     </div>
   )
