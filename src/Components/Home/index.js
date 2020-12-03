@@ -1,5 +1,4 @@
 import React from 'react';
-import UserLoginService from '../../services/userLoginService';
 import RegistrationForm from '../LoginForm/RegistrationForm';
 
 const Home = () => {

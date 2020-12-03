@@ -37,29 +37,6 @@
   border-bottom: 3px solid rgb(180, 56, 56);
 }
 
-.navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 54px;
-  width: 100%;
-  background-color: #1976d2;
-}
-
-.navigation .link {
-  list-style-type: none;
-  text-decoration: none;
-  color: rgb(224, 225, 226);
-  margin: 0 15px;
-  padding: 15px 15px;
-
-}
-
-.link:hover {
-  background-color: rgb(62, 122, 235);
-  color: white;
-}
-
 .tag-wrapper {
   border: 1px solid gray;
   padding: 10px;

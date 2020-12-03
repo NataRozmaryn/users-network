@@ -39,6 +39,7 @@ class LoginForm extends PureComponent {
           this.props.history.push('/');
         } else {
           // show error message
+          alert("Incorrect email or password")
           console.log("auth failed");
         }
       })

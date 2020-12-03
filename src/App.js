@@ -18,9 +18,9 @@ const App = () => {
     <BrowserRouter>
       <div className="app">
         <IsAuthorized.Provider value={{ authorized, setAuthorized }}>
-          <Navigation />
+          <Navigation /> 
           <Content />
-        </IsAuthorized.Provider>
+        </IsAuthorized.Provider> 
       </div>
     </BrowserRouter>
   );

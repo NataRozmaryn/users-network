@@ -20,13 +20,19 @@ export const getAllPosts = (LIMIT) => {
         return res.data
     });
 };
-    
+
 export const getUserPostById = (POST_ID) => {
     return axios.get(`${BASE_URL}/post/${POST_ID}`, { headers: { 'app-id': APP_ID } }).then((res) => {
         return res.data
     });
 };
 export const getUsersPostList = (USER_ID, LIMIT) => {
+    // getPostCommentsList(res.data.id)
+    return axios.get(`${BASE_URL}/user/${USER_ID}/post?limit=${LIMIT}`, { headers: { 'app-id': APP_ID } }).then((res) => {
+        return res.data  
+    });
+};
+export const getUsersPostListWithComments = (USER_ID, LIMIT) => {
     return axios.get(`${BASE_URL}/user/${USER_ID}/post?limit=${LIMIT}`, { headers: { 'app-id': APP_ID } }).then((res) => {
         return res.data
     });
@@ -37,8 +43,10 @@ export const getPostListByTag = (TAG_TITLE, LIMIT) => {
     });
 };
 
-export const getPostCommentsList = (POST_ID, LIMIT) => {
-    return axios.get(`${BASE_URL}/post/${POST_ID}/comment?limit=${LIMIT}`, { headers: { 'app-id': APP_ID } }).then((res) => {
+export const getPostCommentsList = (POST_ID, limit) => {
+    if (!limit)
+        limit = LIMIT;
+    return axios.get(`${BASE_URL}/post/${POST_ID}/comment?limit=${limit}`, { headers: { 'app-id': APP_ID } }).then((res) => {
         return res.data
     });
 };
@@ -52,37 +60,32 @@ export const getTagsList = (LIMIT) => {
 export const getDataFromJsonServer = () => {
     let data;
     return axios.get('http://localhost:3000/db')
-    .then(resp => {
-        data = resp.data;
-        data.forEach(e => {
-            console.log(`${e.first_name}, ${e.last_name}, ${e.email}`);
+        .then(resp => {
+            data = resp.data;
+            data.forEach(e => {
+                console.log(`${e.first_name}, ${e.last_name}, ${e.email}`);
+            });
+        })
+        .catch(error => {
+            console.log(error);
         });
-    })
-    .catch(error => {
-        console.log(error);
-    });
 }
 
-export const changeDataInJsonServer = () => {
-    axios.put('http://localhost:3000/users/6/', {
-    first_name: 'Fred',
-    last_name: 'Blair',
-    email: 'freddyb34@yahoo.com'
-    }).then(resp => {
+export const changeDataInJsonServer = (data) => {
+    axios.put('http://localhost:3000/users/6/', data).then(resp => {
 
         console.log(resp.data);
     }).catch(error => {
 
         console.log(error);
-    });  
+    });
 }
 
 export const deleteDataFromJsonServer = () => {
     axios.delete('http://localhost:3000/users/1/')
-    .then(resp => {
-        console.log(resp.data)
-    }).catch(error => {
-        console.log(error);
-    });  
+        .then(resp => {
+            console.log(resp.data)
+        }).catch(error => {
+            console.log(error);
+        });
 }
-       

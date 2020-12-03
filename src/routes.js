@@ -79,7 +79,7 @@ const route = [
     path: '/signup',
     label: 'Sign up',
     isExact: true,
-    isInMenu: true,
+    isInMenu: false,
     needsAuth: false,
     component: SignUpForm,
   },

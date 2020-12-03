@@ -10,9 +10,9 @@ export default class UserLoginService {
         return this._authorizedUser;
     }
     static async authorizeUser(userId, password) {
-        // debugger;
         const user = await userLoginServiceWithLocalStorage.authorizeUser(userId, password);
         this._authorizedUser = user;
+        console.log("user2", user);
         return user;
     }
     static async logout() {

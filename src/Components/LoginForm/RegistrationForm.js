@@ -5,31 +5,49 @@ import './LoginForm.scss';
 import { ValidateInput, PushError, PopError, HasErrors } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
+import {
+  createUserDataInJsonServer,
+  deleteUserDataFromJsonServer,
+  changeUserDataInJsonServer,
+  getUserDataFromJsonServer
+} from '../../services/UsersDataServiceWithJsonServer';
+
 
 class RegistrationForm extends PureComponent {
   state = {
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
-    url: "",
+    picture: "",
     phone: "",
-    country: "",
-    state: "",
-    city: "",
-    street: "",
+    location:
+    {
+      country: "",
+      state: "",
+      city: "",
+      street: ""
+    },
     gender: "male",
     dateOfBirth: "",
     agree: false,
-    formValid: false
-  }
+    formValid: false,
+    isUserExist: false
+  };
 
   componentDidMount() {
-    // UserLoginService.getUserAutorized().then((user) => {
-    //     console.log("user", user);
-    //     if (user) {
-    //       this.setState(user);
-    //     };
-    // });
+    let user = UserLoginService.getUserAuthorized();
+    let email = user && user.email
+    console.log("user1", user && user.email);
+    if (email) {
+      getUserDataFromJsonServer(email).then((res) => {
+        console.log("userJson", res);
+        this.setState(res);
+        this.setState({ isUserExist: true });
+        console.log("state", this.state)
+      }).catch((err) => console.log(err));
+    };
+
   }
 
   validateField = (fieldName, value) => {
@@ -49,18 +67,19 @@ class RegistrationForm extends PureComponent {
   updateField = (fieldName, value) => {
     this.setState({ [fieldName]: value });
   }
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChangeSelect(event) {
+    this.setState({ gender: event.target.value });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
-    UserLoginService.createUserAccount(this.state)
-      .then(() => {
-        this.context.setAuthorized(true);
-        this.props.history.push('/');
-      })
+    console.log(this.state);
+    if (this.state.isUserExist) {
+      changeUserDataInJsonServer(this.state.id, this.state);
+    } else {
+      this.setState({ id: this.state.email });
+      createUserDataInJsonServer(this.state);
+    }
   }
   render() {
     return (
@@ -88,22 +107,22 @@ class RegistrationForm extends PureComponent {
         <Input
           fieldName="photo"
           label="photo"
-          value={this.state.photo}
+          value={this.state.picture}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}
           className="loginFormInput"
         />
         <label className="loginFormSelect">Gender
-            <select value={this.state.gender} onChange={this.handleChange} className="">
-                <option value="male">male</option>
-                <option value="female">female</option>
-            </select>
+          <select value={this.state.gender} onChange={this.handleChangeSelect.bind(this)} className="">
+            <option value="male">male</option>
+            <option value="female">female</option>
+          </select>
         </label>
         <Input
           fieldName="dateOfBirth"
           label="dateOfBirth"
-          value={this.state.url}
+          value={this.state.dateOfBirth}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}
@@ -130,7 +149,7 @@ class RegistrationForm extends PureComponent {
         <Input
           fieldName="country"
           label="Country"
-          value={this.state.country}
+          value={this.state.location.country}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}
@@ -139,7 +158,7 @@ class RegistrationForm extends PureComponent {
         <Input
           fieldName="state"
           label="State"
-          value={this.state.state}
+          value={this.state.location.state}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}
@@ -148,7 +167,7 @@ class RegistrationForm extends PureComponent {
         <Input
           fieldName="city"
           label="City"
-          value={this.state.state}
+          value={this.state.location.city}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}
@@ -157,7 +176,7 @@ class RegistrationForm extends PureComponent {
         <Input
           fieldName="street"
           label="Street"
-          value={this.state.state}
+          value={this.state.location.street}
           onChange={this.updateField}
           type="text"
           onValidate={this.validateField}

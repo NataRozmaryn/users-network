@@ -1,19 +1,108 @@
 {
-  "posts": [
+  "users": [
     {
-      "id": 1,
+      "id": "1test@gmail.com",
       "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "author": "typicode",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "url": "",
+      "phone": "",
+      "country": "",
+      "state": "",
+      "city": "",
+      "street": "",
+      "gender": "male",
+      "dateOfBirth": ""
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": "test@gmail.com",
+      "firstName": "Joe",
+      "lastName": "Oliver",
+      "email": "oliver@example.ii",
+      "picture": "https://randomuser.me/api/portraits/men/61.jpg",
+      "phone": "015242 92081",
+      "location": {
+        "city": "Liverpool",
+        "country": "United Kingdom",
+        "state": "Fife",
+        "street": "965, St. John’S Road"
+      },
+      "gender": "female",
+      "dateOfBirth": "1990-02-18T09:52:06.627Z",
+      "agree": false,
+      "formValid": true,
+      "isUserExist": true,
+      "title": "mr",
+      "timezone": "-11:00",
+      "registerDate": "2020-03-19T00:01:52.238Z"
+    },
+    {
+      "id": "3test@gmail.com",
+      "firstName": "Joey",
+      "lastName": "Oliver",
+      "title": "mr",
+      "dateOfBirth": "1990-02-18T09:52:06.627Z",
+      "email": "joey.oliver@example.com",
+      "gender": "male",
+      "location": {
+        "city": "Liverpool",
+        "country": "United Kingdom",
+        "state": "Fife",
+        "street": "965, St. John’S Road"
+      },
+      "timezone": "-11:00",
+      "phone": "015242 92081",
+      "picture": "https://randomuser.me/api/portraits/men/61.jpg",
+      "registerDate": "2020-03-19T00:01:52.238Z"
+    },
+    {
+      "id": "3JAf8R85oIlxXd58Piqk",
+      "firstName": "Joey",
+      "lastName": "Oliver",
+      "title": "mr",
+      "dateOfBirth": "1990-02-18T09:52:06.627Z",
+      "email": "joey.oliver@example.com",
+      "gender": "male",
+      "location": {
+        "city": "Liverpool",
+        "country": "United Kingdom",
+        "state": "Fife",
+        "street": "965, St. John’S Road"
+      },
+      "timezone": "-11:00",
+      "phone": "015242 92081",
+      "picture": "https://randomuser.me/api/portraits/men/61.jpg",
+      "registerDate": "2020-03-19T00:01:52.238Z"
+    },
+    {
+      "data": {
+        "id": "test@gmail.com",
+        "firstName": "John",
+        "lastName": "Oley",
+        "email": "joey.oliver@example.com",
+        "picture": "https://randomuser.me/api/portraits/men/61.jpg",
+        "phone": "015242 92081",
+        "location": {
+          "city": "Liverpool",
+          "country": "United Kingdom",
+          "state": "Fife",
+          "street": "965, St. John’S Road"
+        },
+        "gender": "female",
+        "dateOfBirth": "1990-02-18T09:52:06.627Z",
+        "agree": false,
+        "formValid": true,
+        "isUserExist": true,
+        "title": "mr",
+        "timezone": "-11:00",
+        "registerDate": "2020-03-19T00:01:52.238Z",
+        "country": "United Kingdo",
+        "state": "Fif"
+      },
+      "id": "SgOoqdn"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
