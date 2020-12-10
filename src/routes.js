@@ -1,6 +1,6 @@
 // import { lazy } from 'react';
 import Home from './Components/Home';
-import Users from './Components/UsersList/UsersList';
+import Users from './Components/UsersList/Users';
 import UserDetails from './Components/UsersDetails/UserDetails';
 import PostsList from './Components/PostsList/PostsList';
 import PostsByTag from './Components/PostsByTag';

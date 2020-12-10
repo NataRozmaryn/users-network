@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const withFetchData = (getDataFunc, page) => (WrappedComponent) => {
+const withFetchData = (getDataFunc) => (WrappedComponent) => {
     return class WithFetchData extends Component {
         state = {
             data: [],
@@ -8,17 +8,29 @@ const withFetchData = (getDataFunc, page) => (WrappedComponent) => {
             error: null,
         };
 
-        componentDidMount() {
+        fetchData(prevState) {
+            const prevStateData = prevState || []
             this.setState({ loading: true });
-            const getData = getDataFunc(page);
-            getData.then(res => {
-                console.log('users list', res.data);
-                return this.setState({
-                    data: res.data
-                });
-            })
+            const getData = getDataFunc(this.props.page);
+            getData
+                .then(res => {
+                    console.log('users list from fetch', res.data);
+                    return this.setState({
+                        data: this.props.accumulateData ? [...prevStateData, ...res.data] : res.data
+                    });
+                })
                 .catch((error) => this.setState({ error }))
                 .finally(() => this.setState({ loading: false }));
+        }
+        componentDidMount() {
+            this.fetchData();
+        }
+        componentDidUpdate(prevProps, prevState) {
+            console.log("updateprevProps", prevProps.page);
+            console.log("updateprevState", prevState);
+            if (prevProps.page !== this.props.page) {
+                this.fetchData(prevState.data);
+            }
         }
 
         render() {
