@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Input from './Input';
 import './LoginForm.scss';
 
-import { ValidateInput, PushError, PopError, HasErrors } from './FormLogic';
+import { validateName, validateEmail, validateCheckbox, validatePassword} from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
 
@@ -12,34 +12,22 @@ class SignUpForm extends PureComponent {
     lastName: "",
     email: "",
     password: "",
-    agree: false,
-    formValid: false
-  }
-
-  componentDidMount() {
-    // const user = UserLoginService.getUserAutorized('loginForm');
-
-    // if (user) {
-    //   this.setState(user);
-    // };
-  }
-
-  validateField = (fieldName, value) => {
-    let res = ValidateInput(fieldName, value);
-
-    if (res) {
-      PushError(fieldName);
-    } else {
-      PopError(fieldName);
-    }
-
-    this.setState({ formValid: !HasErrors() });
-
-    return res;
+    agree: false
   }
 
   updateField = (fieldName, value) => {
     this.setState({ [fieldName]: value });
+  }
+
+  checkIsValidForm = () => {
+    let errors = {};
+    errors.firstName = validateName(this.state.firstName);
+    errors.lastName = validateName(this.state.lastName);
+    errors.email = validateEmail(this.state.email);
+    errors.agree = validateCheckbox(this.state.agree);
+    errors.password = validatePassword(this.state.password);
+    console.log("err", this.state.errors);
+    return !errors.firstName && !errors.lastName && !errors.email && !errors.agree && !errors.password;
   }
 
   handleSubmit = (e) => {
@@ -64,7 +52,7 @@ class SignUpForm extends PureComponent {
           value={this.state.firstName}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid = {validateName(this.state.firstName)}
           className="loginFormInput"
         />
         <Input
@@ -73,7 +61,7 @@ class SignUpForm extends PureComponent {
           value={this.state.lastName}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid={validateName(this.state.lastName)}
           className="loginFormInput"
         />
         <Input
@@ -82,7 +70,7 @@ class SignUpForm extends PureComponent {
           value={this.state.email}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid={validateEmail(this.state.email)}
           className="loginFormInput"
         />
         <Input
@@ -91,7 +79,7 @@ class SignUpForm extends PureComponent {
           value={this.state.password}
           onChange={this.updateField}
           type="password"
-          onValidate={this.validateField}
+          isValid={validatePassword(this.state.password)}
           className="loginFormInput"
         />
         <Input
@@ -100,12 +88,12 @@ class SignUpForm extends PureComponent {
           value={this.state.agree}
           onChange={this.updateField}
           type="checkbox"
-          onValidate={this.validateField}
+          isValid={validateCheckbox(this.state.agree)}
           className="loginFormInput"
         />
         <button
           className="button"
-          type="submit" disabled={!this.state.formValid}
+          type="submit" disabled={!this.checkIsValidForm()}
         >
           Create account
       </button>

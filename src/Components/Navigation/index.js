@@ -47,10 +47,12 @@ const Navigation = () => {
           )}
         </div>
         <div className="nav_right">
-          <Link to='/signup' className="link signup" >sign-up</Link>
-          {authorized ?
+          {authorized ? 
             <Link to='' onClick={logout} className="link login" >logout</Link> :
-            <Link to={!authorized ? `/login` : ""} className="link">login</Link>
+            <>
+              <Link to='/signup' className="link signup" >sign-up</Link>
+              <Link to={!authorized ? `/login` : ""} className="link">login</Link>
+            </>
           }
         </div>
 

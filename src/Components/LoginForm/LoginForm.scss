@@ -30,7 +30,10 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        height: 70px;
+    }
+    
+    &__input-with-error_container--valid {
+        padding-bottom: 10px;
     }
 }
 

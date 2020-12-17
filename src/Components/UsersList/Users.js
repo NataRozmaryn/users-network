@@ -18,9 +18,8 @@ class Users extends Component {
       <>
         <div className="usersList">
           <Search
-            value=''
-            onFilter={(value) => this.setState({ filterValue: value })}
-            onHighlight={(value) => this.setState({ highlightValue: value })} />
+            onSearch={(value) => this.setState({ filterValue: value })}
+            onSearchChange={(value) => this.setState({ highlightValue: value })} />
           <UserListWithData
             page={this.state.page}
             accumulateData={this.state.accumulateData}

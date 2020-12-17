@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { prepareElementClassName } from './utilsClassMerge';
 
-const Input = ({ fieldName, label, value, onChange, type = "text", onValidate, className }) => {
-  const [isInvalid, SetInvalid] = useState(false);
+const Input = ({ fieldName, label, value, onChange, type = "text", isValid = "", className }) => {
   const [isModified, SetModified] = useState(false);
 
   const onInputChange = (fieldName, value) => {
@@ -10,18 +9,13 @@ const Input = ({ fieldName, label, value, onChange, type = "text", onValidate, c
     SetModified(true);
   }
 
-  useEffect(() => {
-    const isInvalid = onValidate(fieldName, value);
-    SetInvalid(isInvalid);
-  }, [onValidate, fieldName, value]);
-
   return (
     <div
-      className={prepareElementClassName(className, "input-with-error_container", isModified && isInvalid ? "invalid" : "valid")}>
+      className={prepareElementClassName(className, "input-with-error_container", isModified && !isValid ? "invalid" : "valid")}>
       <div className={prepareElementClassName(className, "input_container")}>
         <label className={prepareElementClassName(className, "label")}>{label}</label>
         <input
-          className={prepareElementClassName(className, isModified && isInvalid ? "invalid" : "valid")}
+          className={prepareElementClassName(className, isModified && !isValid ? "invalid" : "valid")}
           name={fieldName}
           type={type}
           checked={value}
@@ -29,7 +23,7 @@ const Input = ({ fieldName, label, value, onChange, type = "text", onValidate, c
           onChange={(e) => onInputChange(fieldName, type === "checkbox" ? e.target.checked : e.target.value)}
         />
       </div>
-      {isModified && isInvalid && <div className={prepareElementClassName(className, "invalid_label")}>{isInvalid}</div>}
+      {isModified && isValid && <div className={prepareElementClassName(className, "invalid_label")}>{isValid}</div>}
     </div>
   );
 };

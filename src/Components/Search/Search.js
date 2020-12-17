@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 
-const Search = ({ value, onHighlight, onFilter }) => {
+const Search = ({ value = "", onSearchChange, onSearch }) => {
     const [search, setSearch] = useState(value);
 
     const onInputChange = (e) => {
-        onHighlight(e.target.value);
+        onSearchChange(e.target.value);
         setSearch(e.target.value);
         console.log("search", e.target.value);
     }
 
     const onSearchClick = (e) => {
-        onFilter(search);
-        onHighlight("");
-        //setSearch("");
+        onSearch(search);
     }
 
     return (

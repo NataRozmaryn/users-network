@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const withFetchData = (getDataFunc) => (WrappedComponent) => {
+const withFetchData = (getDataFunc, accumulateData = false) => (WrappedComponent) => {
     return class WithFetchData extends Component {
         state = {
             data: [],

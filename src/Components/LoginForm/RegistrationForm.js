@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Input from './Input';
 import './LoginForm.scss';
 
-import { ValidateInput, PushError, PopError, HasErrors } from './FormLogic';
+import { validateName, validateEmail, validateCheckbox, validatePassword } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
 import {
@@ -50,25 +50,19 @@ class RegistrationForm extends PureComponent {
 
   }
 
-  validateField = (fieldName, value) => {
-    let res = ValidateInput(fieldName, value);
-
-    if (res) {
-      PushError(fieldName);
-    } else {
-      PopError(fieldName);
-    }
-
-    this.setState({ formValid: !HasErrors() });
-
-    return res;
-  }
-
   updateField = (fieldName, value) => {
     this.setState({ [fieldName]: value });
   }
   handleChangeSelect(event) {
     this.setState({ gender: event.target.value });
+  }
+  checkIsValidForm = () => {
+    let errors = {};
+    errors.firstName = validateName(this.state.firstName);
+    errors.lastName = validateName(this.state.lastName);
+    errors.email = validateEmail(this.state.email);
+    console.log("err", this.state.errors);
+    return !errors.firstName && !errors.lastName && !errors.email;
   }
 
   handleSubmit = (e) => {
@@ -92,7 +86,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.firstName}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid={validateName(this.state.firstName)}
           className="loginFormInput"
         />
         <Input
@@ -101,7 +95,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.lastName}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid={validateName(this.state.lastName)}
           className="loginFormInput"
         />
         <Input
@@ -110,7 +104,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.picture}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <label className="loginFormSelect">Gender
@@ -125,7 +118,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.dateOfBirth}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -134,7 +126,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.email}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
+          isValid={validateName(this.state.email)}
           className="loginFormInput"
         />
         <Input
@@ -143,7 +135,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.phone}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -152,7 +143,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.location.country}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -161,7 +151,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.location.state}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -170,7 +159,6 @@ class RegistrationForm extends PureComponent {
           value={this.state.location.city}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -179,12 +167,11 @@ class RegistrationForm extends PureComponent {
           value={this.state.location.street}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <button
           className="button"
-          type="submit" disabled={!this.state.formValid}
+          type="submit" disabled={!this.checkIsValidForm}
         >
           Save
       </button>

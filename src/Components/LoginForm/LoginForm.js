@@ -2,28 +2,13 @@ import React, { PureComponent } from 'react';
 import Input from './Input';
 import './LoginForm.scss';
 
-import { ValidateInput, PushError, PopError, HasErrors } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
 
 class LoginForm extends PureComponent {
   state = {
     email: "",
-    password: "",
-  }
-
-  validateField = (fieldName, value) => {
-    let res = ValidateInput(fieldName, value);
-
-    if (res) {
-      PushError(fieldName);
-    } else {
-      PopError(fieldName);
-    }
-
-    this.setState({ formValid: !HasErrors() });
-
-    return res;
+    password: ""
   }
 
   updateField = (fieldName, value) => {
@@ -36,6 +21,7 @@ class LoginForm extends PureComponent {
       .then((user) => {
         if (user) {
           this.context.setAuthorized(true);
+          // sessionStorage.setItem(user, this.state);
           this.props.history.push('/');
         } else {
           // show error message
@@ -56,7 +42,6 @@ class LoginForm extends PureComponent {
           value={this.state.email}
           onChange={this.updateField}
           type="text"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <Input
@@ -65,7 +50,6 @@ class LoginForm extends PureComponent {
           value={this.state.password}
           onChange={this.updateField}
           type="password"
-          onValidate={this.validateField}
           className="loginFormInput"
         />
         <button
