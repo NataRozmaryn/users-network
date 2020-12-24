@@ -8,11 +8,18 @@ import UserLoginService from '../../services/userLoginService';
 
 class SignUpForm extends PureComponent {
   state = {
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    agree: false
+    agree: false,
+    errors: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    }
   }
 
   updateField = (fieldName, value) => {
@@ -32,13 +39,15 @@ class SignUpForm extends PureComponent {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
-    UserLoginService.createUserAccount(this.state.email, this.state)
+    console.log(this.state);
+    UserLoginService.registerUser(this.state)
       .then(() => {
         this.context.setAuthorized(true);
-        UserLoginService.authorizeUser(this.state.email, this.state.password);
+        UserLoginService.login(this.state.email, this.state.password);
         this.props.history.push('/');
       })
+      .catch((error) => {this.setState({error: error}); console.log("err", error)}
+      )
   }
 
   render() {

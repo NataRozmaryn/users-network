@@ -17,11 +17,10 @@ class LoginForm extends PureComponent {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    UserLoginService.authorizeUser(this.state.email,this.state.password)
+    UserLoginService.login(this.state.email, this.state.password)
       .then((user) => {
         if (user) {
           this.context.setAuthorized(true);
-          // sessionStorage.setItem(user, this.state);
           this.props.history.push('/');
         } else {
           // show error message

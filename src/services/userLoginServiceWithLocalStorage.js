@@ -1,6 +1,6 @@
 export default class UserLoginServiceWithLocalStorage{
     
-    static async authorizeUser(userId, password) {
+    async login(userId, password) {
         const usersStr = localStorage.getItem('users');
         let users = JSON.parse(usersStr ? usersStr : "[]");
         let user;
@@ -11,13 +11,20 @@ export default class UserLoginServiceWithLocalStorage{
         }
         return null;
     }
-    static async createUserAccount(userId, userData) {
+    async registerUser(userId, userData) {
         const usersStr = localStorage.getItem('users');
         let users = JSON.parse(usersStr ? usersStr : "[]");
         users.push(userData);
         localStorage.setItem("users", JSON.stringify(users));
     }
-    static async deleteUserAccount(userData) {
+    async deleteUserAccount(userData) {
         localStorage.removeItem(userData);
+    }
+    getUserData = (usersId) => {
+    
+    }
+
+    updateUserAccount = (userId, data) => {
+        
     }
 }

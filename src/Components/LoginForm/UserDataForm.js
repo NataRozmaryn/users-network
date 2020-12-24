@@ -5,15 +5,8 @@ import './LoginForm.scss';
 import { validateName, validateEmail, validateCheckbox, validatePassword } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
-import {
-  createUserDataInJsonServer,
-  deleteUserDataFromJsonServer,
-  changeUserDataInJsonServer,
-  getUserDataFromJsonServer
-} from '../../services/UsersDataServiceWithJsonServer';
 
-
-class RegistrationForm extends PureComponent {
+class UserDataForm extends PureComponent {
   state = {
     id: "",
     firstName: "",
@@ -32,22 +25,26 @@ class RegistrationForm extends PureComponent {
     dateOfBirth: "",
     agree: false,
     formValid: false,
-    isUserExist: false
+    isUserExist: false,
+    errors: {
+      firstName: "",
+      lastName: "",
+      email: ""
+    }
   };
 
-  componentDidMount() {
+  componentDidMount() {debugger;
     let user = UserLoginService.getUserAuthorized();
     let email = user && user.email
     console.log("user1", user && user.email);
     if (email) {
-      getUserDataFromJsonServer(email).then((res) => {
+      UserLoginService.getUserData(email).then((res) => {
         console.log("userJson", res);
         this.setState(res);
         this.setState({ isUserExist: true });
         console.log("state", this.state)
       }).catch((err) => console.log(err));
     };
-
   }
 
   updateField = (fieldName, value) => {
@@ -57,22 +54,23 @@ class RegistrationForm extends PureComponent {
     this.setState({ gender: event.target.value });
   }
   checkIsValidForm = () => {
-    let errors = {};
-    errors.firstName = validateName(this.state.firstName);
-    errors.lastName = validateName(this.state.lastName);
-    errors.email = validateEmail(this.state.email);
+    // let errors = {};
+    this.setState({ errors:
+      {firstName: validateName(this.state.firstName),
+        lastName: validateName(this.state.lastName),
+        email: validateEmail(this.state.email)
+    }});
+    // errors.lastName = validateName(this.state.lastName);
+    // errors.email = validateEmail(this.state.email);
     console.log("err", this.state.errors);
-    return !errors.firstName && !errors.lastName && !errors.email;
+    return !this.state.errors.firstName && !this.state.errors.lastName && !this.state.errors.email;
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
     if (this.state.isUserExist) {
-      changeUserDataInJsonServer(this.state.id, this.state);
-    } else {
-      this.setState({ id: this.state.email });
-      createUserDataInJsonServer(this.state);
+      UserLoginService.updateUserAccount(this.state.id, this.state);
     }
   }
   render() {
@@ -86,7 +84,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.firstName}
           onChange={this.updateField}
           type="text"
-          isValid={validateName(this.state.firstName)}
+          isValid={this.state.errors.firstName}
           className="loginFormInput"
         />
         <Input
@@ -95,7 +93,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.lastName}
           onChange={this.updateField}
           type="text"
-          isValid={validateName(this.state.lastName)}
+          isValid={this.state.errors.lastName}
           className="loginFormInput"
         />
         <Input
@@ -126,7 +124,7 @@ class RegistrationForm extends PureComponent {
           value={this.state.email}
           onChange={this.updateField}
           type="text"
-          isValid={validateName(this.state.email)}
+          isValid={this.state.errors.email}
           className="loginFormInput"
         />
         <Input
@@ -179,5 +177,5 @@ class RegistrationForm extends PureComponent {
     );
   }
 };
-RegistrationForm.contextType = IsAuthorizedContext;
-export default RegistrationForm;
+UserDataForm.contextType = IsAuthorizedContext;
+export default UserDataForm;
