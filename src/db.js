@@ -59,7 +59,7 @@ export const getTagsList = (LIMIT) => {
 
 export const getDataFromJsonServer = () => {
     let data;
-    return axios.get('http://localhost:3000/db')
+    return axios.get('http://localhost:3009/db')
         .then(resp => {
             data = resp.data;
             data.forEach(e => {
@@ -72,7 +72,7 @@ export const getDataFromJsonServer = () => {
 }
 
 export const changeDataInJsonServer = (data) => {
-    axios.put('http://localhost:3000/users/6/', data).then(resp => {
+    axios.put('http://localhost:3009/users/6/', data).then(resp => {
 
         console.log(resp.data);
     }).catch(error => {
@@ -82,7 +82,7 @@ export const changeDataInJsonServer = (data) => {
 }
 
 export const deleteDataFromJsonServer = () => {
-    axios.delete('http://localhost:3000/users/1/')
+    axios.delete('http://localhost:3009/users/1/')
         .then(resp => {
             console.log(resp.data)
         }).catch(error => {

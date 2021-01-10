@@ -5,6 +5,8 @@ import Content from './Components/Content';
 import IsAuthorized from './Components/isAuthorized/IsAuthorized';
 import './App.css';
 import UserLoginService from './services/userLoginService';
+// import store from './redux/store'; 
+// import {Provider} from 'react-redux';
 
 
 const App = () => {
@@ -16,12 +18,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    {/* <Provider store={store}> */}
       <div className="app">
         <IsAuthorized.Provider value={{ authorized, setAuthorized }}>
           <Navigation /> 
-          <Content />
+          <Content authorized={authorized}/>
         </IsAuthorized.Provider> 
       </div>
+      {/* </Provider> */}
     </BrowserRouter>
   );
 }

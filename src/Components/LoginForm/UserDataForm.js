@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Input from './Input';
 import './LoginForm.scss';
 
-import { validateName, validateEmail, validateCheckbox, validatePassword } from './FormLogic';
+import { validateName, validateEmail, getValidationState } from './FormLogic';
 import IsAuthorizedContext from '../isAuthorized/IsAuthorized';
 import UserLoginService from '../../services/userLoginService';
 
@@ -14,56 +14,71 @@ class UserDataForm extends PureComponent {
     email: "",
     picture: "",
     phone: "",
-    location:
-    {
-      country: "",
-      state: "",
-      city: "",
-      street: ""
-    },
+    country: "",
+    state: "",
+    city: "",
+    street: "",
     gender: "male",
     dateOfBirth: "",
     agree: false,
     formValid: false,
-    isUserExist: false,
-    errors: {
-      firstName: "",
-      lastName: "",
-      email: ""
-    }
+    errors: null
   };
 
-  componentDidMount() {debugger;
+  componentDidMount() {
     let user = UserLoginService.getUserAuthorized();
-    let email = user && user.email
-    console.log("user1", user && user.email);
+    const getUserIdFromLocalStorage = localStorage.getItem("userId");
+    let email = (user && user.email) || getUserIdFromLocalStorage;
+    console.log("user1", email);
     if (email) {
       UserLoginService.getUserData(email).then((res) => {
-        console.log("userJson", res);
-        this.setState(res);
+        console.log("userJson", res[0].id);
+        this.setState({
+          id: res[0].id || "",
+          firstName: res[0].firstName || "",
+          lastName: res[0].lastName || "",
+          email: res[0].email || "",
+          picture: res[0].picture || "",
+          phone: res[0].phone || "",
+          country: res[0].country || "",
+          state: res[0].state || "",
+          city: res[0].city || "",
+          street: res[0].street || "",
+          gender: res[0].gender || "male",
+          dateOfBirth: res[0].dateOfBirth || "",
+          agree: res[0].agree || false,
+        });
         this.setState({ isUserExist: true });
         console.log("state", this.state)
-      }).catch((err) => console.log(err));
+      })
+        .catch((err) => console.log("err", err));
     };
   }
 
   updateField = (fieldName, value) => {
+    const stateValidation = getValidationState(fieldName, value, this.state.errors, {
+      firstName: validateName,
+      lastName: validateName,
+      email: validateEmail
+    });
+    this.setState(stateValidation);
     this.setState({ [fieldName]: value });
   }
   handleChangeSelect(event) {
     this.setState({ gender: event.target.value });
   }
+
   checkIsValidForm = () => {
-    // let errors = {};
-    this.setState({ errors:
-      {firstName: validateName(this.state.firstName),
+    this.setState({
+      errors:
+      {
+        firstName: validateName(this.state.firstName),
         lastName: validateName(this.state.lastName),
         email: validateEmail(this.state.email)
-    }});
-    // errors.lastName = validateName(this.state.lastName);
-    // errors.email = validateEmail(this.state.email);
+      }
+    });
     console.log("err", this.state.errors);
-    return !this.state.errors.firstName && !this.state.errors.lastName && !this.state.errors.email;
+    return !this.state.errors;
   }
 
   handleSubmit = (e) => {
@@ -84,7 +99,7 @@ class UserDataForm extends PureComponent {
           value={this.state.firstName}
           onChange={this.updateField}
           type="text"
-          isValid={this.state.errors.firstName}
+          validationError={this.state.errors?.firstName}
           className="loginFormInput"
         />
         <Input
@@ -93,7 +108,7 @@ class UserDataForm extends PureComponent {
           value={this.state.lastName}
           onChange={this.updateField}
           type="text"
-          isValid={this.state.errors.lastName}
+          validationError={this.state.errors?.lastName}
           className="loginFormInput"
         />
         <Input
@@ -124,7 +139,7 @@ class UserDataForm extends PureComponent {
           value={this.state.email}
           onChange={this.updateField}
           type="text"
-          isValid={this.state.errors.email}
+          validationError={this.state.errors?.email}
           className="loginFormInput"
         />
         <Input
@@ -138,7 +153,7 @@ class UserDataForm extends PureComponent {
         <Input
           fieldName="country"
           label="Country"
-          value={this.state.location.country}
+          value={this.state.country}
           onChange={this.updateField}
           type="text"
           className="loginFormInput"
@@ -146,7 +161,7 @@ class UserDataForm extends PureComponent {
         <Input
           fieldName="state"
           label="State"
-          value={this.state.location.state}
+          value={this.state.state}
           onChange={this.updateField}
           type="text"
           className="loginFormInput"
@@ -154,7 +169,7 @@ class UserDataForm extends PureComponent {
         <Input
           fieldName="city"
           label="City"
-          value={this.state.location.city}
+          value={this.state.city}
           onChange={this.updateField}
           type="text"
           className="loginFormInput"
@@ -162,7 +177,7 @@ class UserDataForm extends PureComponent {
         <Input
           fieldName="street"
           label="Street"
-          value={this.state.location.street}
+          value={this.state.street}
           onChange={this.updateField}
           type="text"
           className="loginFormInput"

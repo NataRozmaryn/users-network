@@ -1,22 +1,35 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
-import NotFound from '../NotFound';
+import Loader from '../Loader';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 import routes from '../../routes.js';
 
-const Content = () => (
-  <div className="content">
-
-    <Switch>
-      {routes.map(({ path, isExact, component: Component }) => (
-        <Route path={path} exact={isExact} component={Component} key={path} />
-      ))}
-
-      <Route component={NotFound} />
-    </Switch>
-  </div>
-);
-
+const Content = ({ authorized }) => {
+  return (
+    <div className="content">
+      <Switch>
+        <Suspense fallback={<Loader />}>
+          {routes.map(({ path, isExact, component: Component, needsAuth }) => (
+            needsAuth && !authorized ?
+              <PrivateRoute
+                authorized={authorized}
+                needsAuth={needsAuth}
+                path={path}
+                component={Component}
+                key={path}
+              /> :
+              <Route
+                path={path}
+                exact={isExact}
+                component={Component}
+                key={path}
+              />
+          )
+          )}
+        </Suspense>
+      </Switch>
+    </div>);
+};
 export default Content;

@@ -25,7 +25,7 @@ const Navigation = () => {
         <div className="menu__box">
           {routes.filter(({ isInMenu }) => isInMenu).map(
             ({ path, isExact, label, needsAuth }) =>
-              !authorized ? !needsAuth && (
+              (authorized && needsAuth) || !needsAuth ?
                 <NavLink
                   className="link"
                   activeClassName="active-link"
@@ -34,21 +34,13 @@ const Navigation = () => {
                   key={path}
                 >
                   {label}
-                </NavLink>
-              ) : <NavLink
-                className="link"
-                activeClassName="active-link"
-                to={path}
-                exact={isExact}
-                key={path}
-              >
-                  {label}
-                </NavLink>,
+                </NavLink> : null
           )}
         </div>
         <div className="nav_right">
-          {authorized ? 
-            <Link to='' onClick={logout} className="link login" >logout</Link> :
+          {authorized ? <>
+            <Link to='/userdata' className="link signup" >User data</Link>
+            <Link to='' onClick={logout} className="link login" >logout</Link></> :
             <>
               <Link to='/signup' className="link signup" >sign-up</Link>
               <Link to={!authorized ? `/login` : ""} className="link">login</Link>

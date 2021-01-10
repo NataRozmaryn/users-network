@@ -1,9 +1,9 @@
 import axios from 'axios';
 export default class UserLoginServiceWithJsonServer {
     registerUser = (data) => {
-        axios.post('http://localhost:3000/users', data)
-        .then(resp => {debugger;
-            console.log(resp.data); 
+        axios.post('http://localhost:3009/users', data)
+        .then(resp => {
+            console.log("registerUser",resp.data); 
             return resp.data;
         }).catch(error => {
             console.log(error); 
@@ -12,7 +12,7 @@ export default class UserLoginServiceWithJsonServer {
     }
 
     login = (email, data) => {
-        return axios.get(`http://localhost:3000/users/?email=${email}`)
+        return axios.get(`http://localhost:3009/users/?email=${email}`)
             .then(res => {
                 console.log(`getUserDataFromJsonServer`, res.data);
                 return res.data;
@@ -22,9 +22,11 @@ export default class UserLoginServiceWithJsonServer {
                 return error;
             });
     }
-    getUserData = (usersId) => {
+    getUserData = (usersEmail) => {
         let data;
-        return axios.get(`http://localhost:3000/users/${usersId}`)
+        let address = `http://localhost:3009/users/?email=${usersEmail}`;
+        console.log("address", address)
+        return axios.get(address)
             .then(resp => {
                 console.log(`getUserDataFromJsonServer`, data);
                 return data = resp.data;
@@ -35,7 +37,7 @@ export default class UserLoginServiceWithJsonServer {
     }
 
     updateUserAccount = (userId, data) => {
-        axios.put(`http://localhost:3000/users/${userId}/`, data)
+        axios.put(`http://localhost:3009/users/${userId}/`, data)
             .then(resp => {
                 console.log(resp.data);
             }).catch(error => {
@@ -44,7 +46,7 @@ export default class UserLoginServiceWithJsonServer {
     }
 
     deleteUserAccount = (userId) => {
-        axios.delete(`http://localhost:3000/users/${userId}/`)
+        axios.delete(`http://localhost:3009/users/${userId}/`)
             .then(resp => {
                 console.log(resp.data)
             }).catch(error => {

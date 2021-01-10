@@ -9,6 +9,7 @@ import CommentsList from './Components/Comment/CommentsList';
 import UserPosts from './Components/UserPosts/UserPosts.js';
 import LoginForm from './Components/LoginForm/LoginForm';
 import SignUpForm from './Components/LoginForm/SignUp';
+import UserDataForm from './Components/LoginForm/UserDataForm';
 
 const route = [
   {
@@ -16,7 +17,7 @@ const route = [
     label: 'Home',
     isExact: true,
     isInMenu: true,
-    needsAuth: true,
+    needsAuth: false,
     component: Home,
   },
   {
@@ -91,6 +92,14 @@ const route = [
     needsAuth: false,
     component: LoginForm,
   },
+  {
+    path: '/userdata',
+    label: 'User Data',
+    isExact: true,
+    isInMenu: false,
+    needsAuth: true,
+    component: UserDataForm,
+  }
 ];
 
 export default route;

@@ -17,13 +17,17 @@ export default class UserLoginService {
     }
 
     static isUserAuthorized () {
-        return !!this._authorizedUser;
+        return !!this._authorizedUser || !!this.getSessionUserEmail();
     }
     static getUserAuthorized () {
         return this._authorizedUser;
     }
+    static removeSessionUserEmail = () => {
+        localStorage.removeItem('userId');
+    }
     static async logout() {
         this._authorizedUser = null;
+        this.removeSessionUserEmail();
     }
     static async deleteUserAccount(userId) {
         return currentStorage.deleteUserAccount(userId);
@@ -35,4 +39,11 @@ export default class UserLoginService {
     static async getUserData(userEmail) {
         return currentStorage.getUserData(userEmail);
     }
+    static setSessionUserEmail = (email) => {
+        localStorage.setItem('userId', email);
+    }
+    static getSessionUserEmail = (email) => {
+        return localStorage.getItem('userId');
+    }
+    
 }

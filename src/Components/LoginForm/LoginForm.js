@@ -21,6 +21,7 @@ class LoginForm extends PureComponent {
       .then((user) => {
         if (user) {
           this.context.setAuthorized(true);
+          UserLoginService.setSessionUserEmail(this.state.email);
           this.props.history.push('/');
         } else {
           // show error message
